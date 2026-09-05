@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui suis-je ? Temporel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div id="ecran-couverture" class="ecran ecran-accueil sc">
+  <div class="accueil-page">
+    <div class="accueil-ligne-tete">
+      <span>Fonds ancien · salle II</span>
+      <span class="accueil-ligne"></span>
+      <span>Accès visiteur</span>
+    </div>
+
+    <header class="accueil-entete">
+      <div class="ligne-double" style="opacity:.7"></div>
+      <div class="ligne-double" style="opacity:.35;margin-top:3px"></div>
+      <div class="accueil-suscription mono">Fonds ancien · registre des identités</div>
+      <h1>Cabinet des<br>identités perdues</h1>
+      <p class="accueil-accroche">Des pans du fonds ont perdu leurs noms. Trois témoins d'un même événement subsistent ; l'un d'eux a marqué l'histoire. Interrogez-les, rendez-lui son nom, et la fiche retrouve sa place dans le registre.</p>
+      <div class="orn-etoiles" style="text-align:center">❖&nbsp;&nbsp;❖&nbsp;&nbsp;❖</div>
+      <div class="ligne-double" style="opacity:.35;margin-top:22px"></div>
+      <div class="ligne-double" style="opacity:.7;margin-top:3px"></div>
+    </header>
+
+    <div class="accueil-section-titre">
+      <h2 class="mono">Choisissez un dossier</h2>
+      <span class="ligne"></span>
+      <span class="mono accueil-notoriete-note">Classés par notoriété de l'événement</span>
+    </div>
+
+    <p class="accueil-explication">Quel que soit le carton, la fiche à rétablir demande toujours les trois mêmes mentions : le <strong>nom de l'événement</strong>, sa <strong>date</strong>, et lequel des trois témoins est le <strong>personnage historique</strong>. Seule la notoriété de l'événement change.</p>
+
+    <div id="cartons-dossier" class="cartons-grille"></div>
+
+    <section id="bordereau-commande" class="bordereau" hidden>
+      <div class="accueil-section-titre">
+        <h3 class="mono">Bordereau de commande</h3>
+        <span class="ligne"></span>
+      </div>
+      <p class="bordereau-intro">Désignez la lacune à combler. Un seul champ suffit - l'archiviste complète le reste au hasard du fonds.</p>
+
+      <div class="bordereau-champs">
+        <label>
+          <span class="champ-label-mono">Époque ou période</span>
+          <input id="input-custom-epoch" type="text" placeholder="ex. XVe siècle, Antiquité romaine">
+        </label>
+        <label>
+          <span class="champ-label-mono">Événement</span>
+          <input id="input-custom-event" type="text" placeholder="ex. un siège, un couronnement">
+        </label>
+        <label>
+          <span class="champ-label-mono">Date précise</span>
+          <input id="input-custom-date" type="text" placeholder="ex. 1453">
+        </label>
+        <label>
+          <span class="champ-label-mono">Lieu ou thème</span>
+          <input id="input-custom-lieu" type="text" placeholder="ex. Méditerranée, exploration">
+        </label>
+      </div>
+
+      <div class="bordereau-notoriete">
+        <div class="champ-label-mono">Notoriété de l'événement</div>
+        <div id="regimes-notoriete" class="regimes-grille"></div>
+      </div>
+    </section>
+
+    <div class="accueil-pied">
+      <button id="btn-lancer" class="btn" type="button">Ouvrir le dossier</button>
+      <span id="accueil-resume" class="mono accueil-resume"></span>
+      <span style="flex:1"></span>
+      <button id="btn-reglement" class="lien-mono" type="button">Règlement de la salle</button>
+    </div>
+    <p id="erreur-couverture" class="erreur" hidden></p>
+
+    <p class="accueil-note-bas">- consultation sur place · aucune pièce ne sort de la salle -</p>
+  </div>
+</div>
+
+<div id="ecran-reglement" class="ecran ecran-reglement sc" hidden>
+  <div class="reglement-page">
+    <div class="reglement-ligne-tete">
+      <button id="btn-retour-cartons" class="lien-mono" type="button">← Retour aux cartons</button>
+      <span class="accueil-ligne"></span>
+      <span>Affiché en salle II</span>
+    </div>
+
+    <article class="reglement-article">
+      <header class="reglement-entete">
+        <div class="ligne-double" style="opacity:.7"></div>
+        <div class="ligne-double" style="opacity:.35;margin-top:3px"></div>
+        <div class="accueil-suscription mono">Cabinet des identités perdues</div>
+        <h1>Règlement<br>de la salle</h1>
+        <div class="orn-etoiles" style="text-align:center">❖&nbsp;&nbsp;❖&nbsp;&nbsp;❖</div>
+        <div class="ligne-double" style="opacity:.35;margin-top:20px"></div>
+        <div class="ligne-double" style="opacity:.7;margin-top:3px"></div>
+      </header>
+
+      <div id="reglement-articles"></div>
+
+      <section class="reglement-derniere">
+        <div class="reglement-sanction">
+          <div class="mono">Sanction</div>
+          <p>Toute affirmation qui ne s'appuie sur aucune déposition est réputée nulle : la fiche est refermée en l'état et versée au fonds sans nom.</p>
+        </div>
+        <div class="reglement-actions">
+          <button id="btn-choisir-dossier" class="btn btn-principal" type="button">Choisir un dossier</button>
+          <span style="flex:1"></span>
+          <span class="mono reglement-tag">Règlement affiché · salle II</span>
+        </div>
+      </section>
+    </article>
+
+    <p class="accueil-note-bas">- consultation sur place · aucune pièce ne sort de la salle -</p>
+  </div>
+</div>
+
+<div id="ecran-chargement" class="ecran ecran-chargement" hidden>
+  <span class="poussiere" style="left:22%;bottom:34%;width:3px;height:3px;animation-duration:5.5s;animation-delay:0s"></span>
+  <span class="poussiere" style="left:38%;bottom:28%;width:2px;height:2px;animation-duration:7s;animation-delay:.9s"></span>
+  <span class="poussiere" style="left:63%;bottom:38%;width:3px;height:3px;animation-duration:6.2s;animation-delay:2.1s"></span>
+  <span class="poussiere" style="left:76%;bottom:26%;width:2px;height:2px;animation-duration:8s;animation-delay:3.4s"></span>
+
+  <div class="chargement-page">
+    <div class="chargement-lampe mono">Descente aux magasins</div>
+    <h1 class="chargement-titre">L'archiviste est parti<br>chercher votre carton</h1>
+
+    <div class="chargement-carte">
+      <div class="chargement-carte-tete">
+        <span>DOSSIER <span id="v-chargement-dossier">-</span></span>
+        <span id="v-chargement-pct">LEVÉE EN COURS</span>
+      </div>
+      <div class="chargement-ligne-zone">
+        <p id="v-chargement-ligne"></p>
+      </div>
+      <div id="chargement-dots" class="chargement-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="chargement-action">
+      <button id="btn-entrer-salle" class="btn" type="button" disabled>Entrer dans la salle</button>
+      <span id="chargement-hint" class="mono chargement-hint">Merci de patienter à la table.</span>
+    </div>
+
+    <p class="accueil-note-bas">- consultation sur place · aucune pièce ne sort de la salle -</p>
+  </div>
+</div>
+
+<div id="ecran-jeu" class="ecran jeu" hidden>
+  <aside class="sidebar">
+    <header class="sidebar-entete">
+      <div class="mono">Fonds ancien · Salle II</div>
+      <div class="sidebar-titre">Cabinet des<br>identités perdues</div>
+      <div class="sidebar-dossier"><span class="tiret"></span>DOSSIER N° <span id="numero-dossier-jeu">----</span></div>
+    </header>
+
+    <div class="sidebar-carnet sc">
+      <div class="carnet-entete">
+        <div class="mono">Carnet de déduction</div>
+        <div class="mono" id="carnet-compte">0 fiche</div>
+      </div>
+      <div id="carnet-contenu"></div>
+    </div>
+  </aside>
+
+  <main class="principal">
+    <div class="principal-scroll sc">
+      <div class="principal-contenu">
+        <header class="registre-entete">
+          <div class="ligne-double" style="opacity:.7"></div>
+          <div class="ligne-double" style="opacity:.4;margin-top:3px"></div>
+          <h1>Registre des<br>interrogatoires</h1>
+          <div class="orn-etoiles">❖&nbsp;&nbsp;❖&nbsp;&nbsp;❖</div>
+          <div class="ligne-double" style="opacity:.4;margin-top:18px"></div>
+          <div class="ligne-double" style="opacity:.7;margin-top:3px"></div>
+        </header>
+
+        <div class="notice-liminaire">
+          <span class="mono">Notice liminaire</span>
+          <p id="texte-ambiance"></p>
+        </div>
+
+        <div class="separateur"><span class="separateur-ligne"></span><span class="mono separateur-label">Dépositions</span><span class="separateur-ligne"></span></div>
+
+        <p id="texte-narration" class="narration"></p>
+
+        <div id="rounds"></div>
+
+        <div class="fin-pieces">- fin des pièces versées -</div>
+      </div>
+    </div>
+
+    <footer class="pied">
+      <div class="pied-contenu">
+        <div class="cible-temoin">
+          <span class="mono">Témoin interrogé</span>
+          <span class="tiret"></span>
+          <div id="choix-temoin"></div>
+        </div>
+        <form id="form-question" class="form-question">
+          <span class="badge-question">
+            <span class="mono">Question</span>
+            <span id="prochain-numero">1</span>
+          </span>
+          <input id="input-question" type="text" placeholder="Adressez une question au témoin choisi…" autocomplete="off">
+          <button type="submit" class="btn btn-principal">Verser</button>
+        </form>
+      </div>
+    </footer>
+
+    <button id="btn-tiroir" class="btn-tiroir" type="button">❖ Bulletin de résolution</button>
+  </main>
+
+  <aside id="tiroir" class="tiroir sc">
+    <div class="tiroir-interieur">
+      <div class="tiroir-entete">
+        <h2>Bulletin de résolution</h2>
+        <button id="btn-fermer-tiroir" class="btn-fermer" type="button">×</button>
+      </div>
+      <p class="tiroir-intro">Consignez vos conclusions. Une fois scellées, elles sont comparées aux archives.</p>
+      <form id="form-verdict">
+        <label>
+          <span class="champ-label">Quel est l'événement historique ?</span>
+          <span class="champ-hint">Nom de la bataille, du traité, de l'événement</span>
+          <input id="input-evenement" type="text">
+        </label>
+        <label>
+          <span class="champ-label">À quelle époque cela se passe-t-il ?</span>
+          <span class="champ-hint">Année, décennie ou siècle</span>
+          <input id="input-epoque" type="text">
+        </label>
+        <label>
+          <span class="champ-label">L'un des trois témoins est un personnage important. Qui ?</span>
+          <span class="champ-hint">Nom et, si possible, titre</span>
+          <input id="input-personnage" type="text">
+        </label>
+        <div class="choix-temoin-bulletin">
+          <div class="mono">Lequel des trois témoins ?</div>
+          <div id="choix-temoin-verdict"></div>
+        </div>
+        <button type="submit" id="btn-sceller" class="btn btn-principal" disabled>Sceller le bulletin</button>
+      </form>
+    </div>
+  </aside>
+</div>
+
+<div id="ecran-verdict" class="ecran ecran-pv sc" hidden>
+  <div class="pv-page">
+    <div class="pv-dossier-ligne">
+      <span id="v-dossier-tag"></span>
+      <span class="pv-ligne"></span>
+      <span id="v-cloture-tag"></span>
+    </div>
+
+    <article class="pv-article">
+      <header class="pv-entete">
+        <div class="ligne-double" style="opacity:.7"></div>
+        <div class="ligne-double" style="opacity:.35;margin-top:3px"></div>
+        <h1>Procès-verbal<br>de clôture</h1>
+        <div class="orn-etoiles pv-orn">❖&nbsp;&nbsp;❖&nbsp;&nbsp;❖</div>
+        <div class="ligne-double" style="opacity:.35;margin-top:20px"></div>
+        <div class="ligne-double" style="opacity:.7;margin-top:3px"></div>
+
+        <div class="pv-tete-grille">
+          <div class="pv-tete-gauche">
+            <div id="v-badge-verdict" class="pv-badge-verdict">
+              <span class="pv-puce"></span>
+              <span id="v-verdict-label"></span>
+            </div>
+            <p id="v-verdict-ligne" class="pv-verdict-texte"></p>
+          </div>
+          <div class="pv-score">
+            <span class="mono">Score final</span>
+            <span class="pv-score-valeur"><span id="v-score-nombre"></span><span class="pv-score-total">/100</span></span>
+            <span id="v-grade" class="mono"></span>
+          </div>
+        </div>
+      </header>
+
+      <section class="pv-section">
+        <div class="pv-section-titre"><h2 class="mono">Barème de notation</h2><span class="ligne"></span></div>
+        <div id="v-criteres" class="pv-criteres-grille"></div>
+      </section>
+
+      <section class="pv-section">
+        <div class="pv-section-titre"><h2 class="mono">Levée d'anonymat</h2><span class="ligne"></span></div>
+        <div id="v-temoins" class="pv-temoins-grille"></div>
+      </section>
+
+      <section class="pv-section pv-section-derniere">
+        <div class="pv-section-titre"><h2 class="mono">Note de l'archiviste</h2><span class="ligne"></span></div>
+        <div id="v-faits" class="pv-faits-grille"></div>
+        <p id="v-debriefing" class="pv-debriefing"></p>
+        <div class="pv-actions">
+          <button id="btn-nouvelle-enquete" class="btn btn-principal" type="button">Nouvelle enquête</button>
+          <button id="btn-relire-registre" class="btn btn-secondaire" type="button">Relire le registre</button>
+          <span style="flex:1"></span>
+          <span id="v-piece-scellee" class="mono pv-piece-scellee"></span>
+        </div>
+      </section>
+    </article>
+
+    <p class="pv-pied">- versé au fonds ancien, salle II -</p>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
