@@ -11,7 +11,7 @@ Anthropic valide.
 
 ```bash
 export ANTHROPIC_API_KEY="votre-clé-api"
-uv run uvicorn hackaton.server:app --reload
+uv run uvicorn cabinet.server:app --reload
 ```
 
 Puis ouvrir http://localhost:8000/. "uv run" installe les dépendances tout seul au premier

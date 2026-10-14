@@ -6,8 +6,9 @@ import re
 
 import anthropic
 
-from hackaton.game_logger import GameLogger
-from hackaton.prompts import (
+from cabinet.config import GREFFIER_MODEL, JUDGE_MODEL, ORCHESTRATOR_MODEL, WITNESS_MODEL
+from cabinet.game_logger import GameLogger
+from cabinet.prompts import (
     GREFFIER_SYSTEM_PROMPT,
     GREFFIER_USER_TEMPLATE,
     JUDGE_SYSTEM_PROMPT,
@@ -16,11 +17,6 @@ from hackaton.prompts import (
     ORCHESTRATOR_USER_TEMPLATE,
     WITNESS_COUNT,
 )
-
-ORCHESTRATOR_MODEL = "claude-sonnet-5"
-JUDGE_MODEL = "claude-sonnet-5"
-WITNESS_MODEL = "claude-haiku-4-5"
-GREFFIER_MODEL = "claude-haiku-4-5"
 
 REDACTED = "[???]"
 
@@ -62,9 +58,7 @@ def _call_json(client: anthropic.Anthropic, model: str, system: str, user_messag
     raise ValueError(f"Réponse du modèle non parsable en JSON : {last_error}")
 
 
-def generate_scenario(
-    theme: str, client: anthropic.Anthropic | None = None, logger: GameLogger | None = None
-) -> dict:
+def generate_scenario(theme: str, client: anthropic.Anthropic | None = None, logger: GameLogger | None = None) -> dict:
     """Génère un scénario complet (événement, époque, témoins secrets) pour le thème donné."""
     client = client or _get_client()
     if logger:
@@ -195,6 +189,7 @@ class SharedInterrogation:
             "temoin_2": [],
             "temoin_3": [],
         }
+
     def _build_messages_for(self, perspective_index: int, trailing: str) -> list[dict]:
         messages = []
         for entry in self.log:
@@ -253,18 +248,14 @@ class SharedInterrogation:
                 self.logger.log("reaction_spontanee", temoin_index=reactor_index, affichee=False)
             return None
         if self.logger:
-            self.logger.log(
-                "reaction_spontanee", temoin_index=reactor_index, affichee=True, reponse=reply
-            )
+            self.logger.log("reaction_spontanee", temoin_index=reactor_index, affichee=True, reponse=reply)
         return reply
 
     def ouverture(self):
         """Scène d'ouverture : les 3 témoins échangent brièvement avant que le joueur
         n'interroge qui que ce soit. Générateur : cède (locuteur, texte) dès que chaque
         réplique est produite, pour un affichage progressif sans attendre la suite."""
-        amorce = self.scenario.get(
-            "amorce_collective", "Vous voilà réunis, dans l'attente d'être interrogés."
-        )
+        amorce = self.scenario.get("amorce_collective", "Vous voilà réunis, dans l'attente d'être interrogés.")
         self.log.append({"locuteur": "Narration", "texte": amorce})
         yield "Narration", amorce
         for i in range(WITNESS_COUNT):
@@ -297,9 +288,7 @@ class SharedInterrogation:
         self.log.append({"locuteur": witness_index, "texte": reply})
         yield witness_index, reply
 
-        self.carnet = update_carnet(
-            self.carnet, witness_index, reply, client=self.client, logger=self.logger
-        )
+        self.carnet = update_carnet(self.carnet, witness_index, reply, client=self.client, logger=self.logger)
 
         for other_index in range(WITNESS_COUNT):
             if other_index == witness_index:
@@ -308,9 +297,7 @@ class SharedInterrogation:
             if reaction:
                 self.log.append({"locuteur": other_index, "texte": reaction})
                 yield other_index, reaction
-                self.carnet = update_carnet(
-                    self.carnet, other_index, reaction, client=self.client, logger=self.logger
-                )
+                self.carnet = update_carnet(self.carnet, other_index, reaction, client=self.client, logger=self.logger)
 
 
 def _points_evenement(evenement_correct: bool) -> int:

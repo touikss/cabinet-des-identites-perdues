@@ -10,8 +10,8 @@ from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from hackaton.agents import SharedInterrogation, generate_scenario, judge_final
-from hackaton.game_logger import GameLogger
+from cabinet.agents import SharedInterrogation, generate_scenario, judge_final
+from cabinet.game_logger import GameLogger
 
 app = FastAPI(title="Qui suis-je ? Temporel")
 
