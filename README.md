@@ -11,7 +11,7 @@ Solo project, SCIA 2026 hackathon. The full write-up is in French: [`RAPPORT.pdf
 
 ![A full game: pick a case file, question the witnesses, seal the resolution form, get the verdict](docs/demo.gif)
 
-*An example game session (about 1 minute, loading and verdict waits sped up; recorded with a scripted browser, the answers are generated live by the models).*
+*An example game session (about 1 minute, loading and verdict waits sped up; the answers are generated live by the models).*
 
 | Case files | Interrogation | Verdict |
 |---|---|---|

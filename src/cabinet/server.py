@@ -15,7 +15,6 @@ from cabinet.game_logger import GameLogger
 
 app = FastAPI(title="Qui suis-je ? Temporel")
 
-# Sessions en mémoire : session_id -> {"scenario": dict, "interrogation": SharedInterrogation, "logger": GameLogger}
 SESSIONS: dict[str, dict] = {}
 
 
@@ -112,7 +111,7 @@ def flux_ouverture(session_id: str) -> StreamingResponse:
     interrogation: SharedInterrogation = session["interrogation"]
 
     if session["ouverture_faite"]:
-        # Rejeu instantané (ex: appel en double) à partir du log déjà généré.
+
         def rejouer():
             for entry in interrogation.log:
                 yield {"type": "reply", "locuteur": entry["locuteur"], "texte": entry["texte"]}

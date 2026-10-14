@@ -8,7 +8,7 @@ def _scenario(**overrides):
         "noms_interdits": ["Wellington", "Mont-Saint-Jean"],
         "temoin_1": {"identite_secrete": "un tambour anonyme"},
         "temoin_2": {"identite_secrete": "Napoléon Bonaparte"},
-        "temoin_3": {"identite_secrete": "ab"},  # trop court : ignoré
+        "temoin_3": {"identite_secrete": "ab"},
     }
     scenario.update(overrides)
     return scenario

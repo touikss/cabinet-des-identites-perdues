@@ -60,7 +60,7 @@ def test_judge_final_max_score_is_100():
 
 
 def test_judge_final_wrong_witness_and_missing_fields():
-    client = _FakeClient("{}")  # le juge ne dit rien : tout est compté faux, écart = 9999
+    client = _FakeClient("{}")
     guesses = {"evenement": "?", "epoque": "?", "personnage": "?", "temoin_associe": 1}
     verdict = judge_final(SCENARIO, guesses, nb_questions=8, client=client)
     assert verdict["points"] == {"evenement": 0, "date": 0, "personnage": 0, "questions": 21}

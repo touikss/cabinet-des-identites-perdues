@@ -22,8 +22,6 @@ REDACTED = "[???]"
 
 
 def _get_client() -> anthropic.Anthropic:
-    # Resolves credentials from ANTHROPIC_API_KEY / ANTHROPIC_AUTH_TOKEN / an
-    # `ant auth login` profile - never hardcode a key here.
     return anthropic.Anthropic()
 
 
@@ -64,13 +62,10 @@ def generate_scenario(theme: str, client: anthropic.Anthropic | None = None, log
     if logger:
         logger.log("joueur_theme", theme=theme)
 
-    # Le slot du personnage important est tiré en Python, pas laissé au LLM : un modèle a
-    # naturellement tendance à retomber sur la même position (biais de rang), ce n'est pas
-    # un générateur aléatoire fiable.
     slot_impose = f"temoin_{random.randint(1, WITNESS_COUNT)}"
     user_message = ORCHESTRATOR_USER_TEMPLATE.format(theme=theme, slot_impose=slot_impose)
     scenario = _call_json(client, ORCHESTRATOR_MODEL, ORCHESTRATOR_SYSTEM_PROMPT, user_message)
-    scenario["personnage_important"] = slot_impose  # sécurité, au cas où le modèle dévierait
+    scenario["personnage_important"] = slot_impose
 
     if logger:
         logger.log("orchestrateur", scenario=scenario, slot_impose=slot_impose)
@@ -180,8 +175,6 @@ class SharedInterrogation:
         self.logger = logger
         self.redactor = _build_redactor(scenario)
         self.temoins = [scenario[f"temoin_{i}"] for i in range(1, WITNESS_COUNT + 1)]
-        # Journal partagé (sert aussi de fil de discussion unique pour l'UI) :
-        # liste de {"locuteur": "Joueur" | "Narration" | index_temoin (int), "texte": str}
         self.log: list[dict] = []
         self.carnet: dict[str, list[str]] = {
             "generaux": [],
