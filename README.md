@@ -5,7 +5,7 @@ A historical deduction game played in natural language against a multi-agent LLM
 freely; one of them is secretly a famous historical figure who will never say who they are,
 and the player must work out the event, the date, the hidden identity and which witness it is.
 
-Solo project, SCIA 2026 hackathon. The full write-up is in French: [`RAPPORT.pdf`](RAPPORT.pdf).
+Solo project, SCIA 2026 hackathon (written in September 2026; tests, English documentation and a licence were added in October 2026). The full write-up is in French: [`RAPPORT.pdf`](RAPPORT.pdf).
 
 ## Demo
 
